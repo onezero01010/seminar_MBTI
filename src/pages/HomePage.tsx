@@ -53,6 +53,9 @@ export function HomePage() {
         발령장 받으러 가기
         <ChevronRight aria-hidden="true" size={22} />
       </Link>
+      <p className="-mt-3 text-center text-xs text-ink/55 sm:-mt-5">
+        응답 결과는 이름 없이 익명으로 세미나 통계에 활용됩니다.
+      </p>
     </section>
   );
 }

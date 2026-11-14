@@ -34,6 +34,7 @@ jobs:
         run: npm run build
         env:
           VITE_BASE_PATH: /seminar_MBTI/
+          VITE_ARCHIVE_URL: ${{ vars.ARCHIVE_URL }}
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

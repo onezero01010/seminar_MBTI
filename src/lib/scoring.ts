@@ -7,11 +7,7 @@ export function isComplete(answers: Answers) {
   return questions.every((question) => answers[question.id]);
 }
 
-export function scoreAnswers(answers: Answers): TypeCode {
-  if (!isComplete(answers)) {
-    throw new Error("All questions must be answered before scoring.");
-  }
-
+export function countPoles(answers: Answers): Record<Pole, number> {
   const counts: Record<Pole, number> = {
     S: 0,
     N: 0,
@@ -26,9 +22,18 @@ export function scoreAnswers(answers: Answers): TypeCode {
   for (const question of questions) {
     const answer = answers[question.id];
     const pole = answer === "A" ? question.optionA.pole : question.optionB.pole;
+    if (!answer) continue;
     counts[pole] += 1;
   }
+  return counts;
+}
 
+export function scoreAnswers(answers: Answers): TypeCode {
+  if (!isComplete(answers)) {
+    throw new Error("All questions must be answered before scoring.");
+  }
+
+  const counts = countPoles(answers);
   return `${counts.E >= counts.I ? "E" : "I"}${
     counts.S >= counts.N ? "S" : "N"
   }${counts.T >= counts.F ? "T" : "F"}${

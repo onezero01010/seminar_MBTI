@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { NunIllustration } from "../components/NunIllustration";
+import { archiveResult } from "../lib/archive";
 import { getResultSlug } from "../lib/resultSlugs";
 import { isComplete, scoreAnswers } from "../lib/scoring";
 import { useQuiz } from "../state/useQuiz";
@@ -14,7 +15,9 @@ export function LoadingPage() {
       return;
     }
     const timer = window.setTimeout(() => {
-      navigate(`/result/${getResultSlug(scoreAnswers(answers))}`, { replace: true });
+      const type = scoreAnswers(answers);
+      archiveResult(answers, type);
+      navigate(`/result/${getResultSlug(type)}`, { replace: true });
     }, 1600);
     return () => window.clearTimeout(timer);
   }, [answers, navigate]);
